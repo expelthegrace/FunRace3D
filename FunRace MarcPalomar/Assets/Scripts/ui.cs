@@ -4,15 +4,43 @@ using UnityEngine;
 
 public class ui : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    //GameObjects
+    public GameObject startPanel;
+    public player Player;
+
+    //Globals
+    public int state; //0 to start, 1 playing, 2 dead
+
+
+    public void Start()
     {
-        
+        startPanel.SetActive(true);
+
+        Player = GameObject.Find("Player").GetComponent<player>();
+        state = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        
+        if (state == 0)
+        {
+            startPanel.SetActive(true);           
+            
+            if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Mouse0))
+            {
+                state = 1;
+                startPanel.SetActive(false);
+
+            }
+        }
+        else if (Player.dead)
+        {
+            state = 2;
+            startPanel.SetActive(true);
+        }
+        if (state == 2 && !Player.dead)
+        {
+            state = 0;
+        }
     }
 }

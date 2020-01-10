@@ -9,6 +9,7 @@ public class player : MonoBehaviour
     public Transform wayPointsParent;
     public Transform spawnPoint;
     public Transform cameraDeadtarget;
+    public camera cam;
 
     //Modifiers
     public float playerSpeed = 1f;
@@ -40,16 +41,17 @@ public class player : MonoBehaviour
         transform.position = spawnPoint.position;
         dead = false;
         dieForceNow = dieForce;
-        
+        cam = GameObject.Find("Main Camera").GetComponent<camera>();
+
     }
 
-    private void Reset()
+    public void Reset()
     {
+        dead = false;
         transform.position = spawnPoint.position;
         actualPoint = 0;
-        dead = false;
+        
         dieForceNow = dieForce;
-
     }
 
     // Update is called once per frame
@@ -78,21 +80,43 @@ public class player : MonoBehaviour
         }
         else
         {
-            transform.position += new Vector3(1, 1, 1).normalized * dieForceNow;
-            dieForceNow *= dieForceModifier;
-            dieForceNow = Mathf.Max(0.5f, dieForceNow);
+            cam.dead = true;
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
+            {
 
-            //Player rotation
-            Vector3 newForward = Vector3.Slerp(transform.forward, (cameraDeadtarget.position - transform.position).normalized, Time.deltaTime * rotateSpeed * 30);
-            transform.forward = newForward;
+                Reset();
+                Debug.Log("reset");
+                cam.Reset();
+            }
+            else
+            {
+
+                transform.position += new Vector3(1, 1, 1).normalized * dieForceNow;
+                dieForceNow *= dieForceModifier;
+                dieForceNow = Mathf.Max(0.5f, dieForceNow);
+
+                //Player rotation
+                Vector3 newForward = Vector3.Slerp(transform.forward, (cameraDeadtarget.position - transform.position).normalized, Time.deltaTime * rotateSpeed * 30);
+                transform.forward = newForward;
+
+
+            }
         }
 
 
         if (Input.GetKey(KeyCode.R))
         {
             Reset();
+            cam.Reset();
         }
     }
 
-  
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "death")
+        {
+            dead = true;
+
+        }
+    }
 }
