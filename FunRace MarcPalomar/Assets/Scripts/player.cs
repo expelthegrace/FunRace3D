@@ -113,6 +113,7 @@ public class player : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("sads");
         if (collision.gameObject.tag == "death")
         {
             dead = true;
