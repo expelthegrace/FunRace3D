@@ -12,6 +12,8 @@ public class player : MonoBehaviour
     public camera cam;
 
     public AudioSource mamamia;
+    public AudioSource starget;
+    public AudioSource backgroundMusic;
 
     //Modifiers
     public float playerSpeed = 1f;
@@ -120,6 +122,16 @@ public class player : MonoBehaviour
         {
             dead = true;
             mamamia.Play();
+        }
+        
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+         if (other.gameObject.tag == "end")
+        {
+            starget.Play();
+            backgroundMusic.Stop();
         }
     }
 }
