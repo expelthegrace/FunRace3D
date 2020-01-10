@@ -1,5 +1,9 @@
 Demo created by Marc Palomar Soler
 
+How to play it:
+press space or mouse 0 to go further.
+press R to reset
+
 Task: mirror the Fun Race 3D mobile game
 Time max: 5 hours
 Time used: 5 hours

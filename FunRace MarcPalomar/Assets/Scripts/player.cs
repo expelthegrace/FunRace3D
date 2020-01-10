@@ -65,8 +65,10 @@ public class player : MonoBehaviour
         if (!dead)
         {
 
+
             if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Mouse0))
             {
+              
 
                 //Player movement
                 transform.position = Vector3.MoveTowards(transform.position, waypoints[actualPoint].position, Time.deltaTime * playerSpeed);
@@ -95,7 +97,7 @@ public class player : MonoBehaviour
             }
             else
             {
-
+                //Player movement
                 transform.position += new Vector3(1, 1, 1).normalized * dieForceNow;
                 dieForceNow *= dieForceModifier;
                 dieForceNow = Mathf.Max(0.5f, dieForceNow);
@@ -132,6 +134,7 @@ public class player : MonoBehaviour
         {
             starget.Play();
             backgroundMusic.Stop();
+            cam.end = true;
         }
     }
 }

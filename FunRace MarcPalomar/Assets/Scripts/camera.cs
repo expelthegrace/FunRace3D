@@ -10,6 +10,7 @@ public class camera : MonoBehaviour
     public Transform cameraSpawn;
     public Transform cameraDeadtarget;
     public Transform cameraDeadPosition;
+    public Transform endcameraposition;
 
     //Modifiers
     public float wayPointNear = 2;
@@ -20,6 +21,7 @@ public class camera : MonoBehaviour
     private List<Transform> waypoints;
     public int actualPoint;
     public bool dead;
+    public bool end;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,7 @@ public class camera : MonoBehaviour
             waypoints.Add(child);
         }
         dead = false;
+        end = false;
     }
 
     public void Reset()
@@ -39,6 +42,8 @@ public class camera : MonoBehaviour
         transform.position = cameraSpawn.position;
         actualPoint = 0;
         dead = false;
+        end = false;
+
     }
 
     // Update is called once per frame
@@ -54,6 +59,11 @@ public class camera : MonoBehaviour
                 if (actualPoint + 1 < waypoints.Count)
                     actualPoint++;
             }
+        }
+
+        if (end)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, endcameraposition.position, Time.deltaTime * cameraSpeed);
         }
 
         transform.rotation = Quaternion.LookRotation((player.position - transform.position).normalized);
