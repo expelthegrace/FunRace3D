@@ -112,7 +112,7 @@ MonoBehaviour:
   cilinder: {fileID: 3500293758587357102}
   period: 4
   downSpeed: 7
-  upSpeed: 1.1
+  upSpeed: 2
 --- !u!1 &3500293757887951375
 GameObject:
   m_ObjectHideFlags: 0

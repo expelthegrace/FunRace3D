@@ -20,6 +20,8 @@ public class player : MonoBehaviour
 
     public int actualPoint;
 
+    public bool dead;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,12 +32,16 @@ public class player : MonoBehaviour
         {
            waypoints.Add(child);
         }
+
+        transform.position = spawnPoint.position;
+        dead = false;
     }
 
     private void Reset()
     {
         transform.position = spawnPoint.position;
         actualPoint = 0;
+        dead = false;
     }
 
     // Update is called once per frame
