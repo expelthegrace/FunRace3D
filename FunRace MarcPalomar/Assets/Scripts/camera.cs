@@ -8,6 +8,9 @@ public class camera : MonoBehaviour
     public Transform cameraWayPointsParent;
     public Transform player;
     public Transform cameraSpawn;
+    public Transform cameraDeadtarget;
+    public Transform cameraDeadPosition;
+    public player Player;
 
     //Modifiers
     public float wayPointNear = 2;
@@ -28,6 +31,8 @@ public class camera : MonoBehaviour
         {
             waypoints.Add(child);
         }
+
+        Player = GameObject.Find("Player").GetComponent<player>();
     }
 
     private void Reset()
@@ -40,7 +45,7 @@ public class camera : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Mouse0) && !Player.dead)
         {
             //Camera movement
             transform.position = Vector3.MoveTowards(transform.position, waypoints[actualPoint].position, Time.deltaTime * cameraSpeed);
@@ -51,9 +56,16 @@ public class camera : MonoBehaviour
 
             }
         }
+        if (Player.dead)
+        {
 
-        //Camera rotation
-        transform.rotation = Quaternion.LookRotation(player.position - transform.position).normalized;
+            transform.position = Vector3.MoveTowards(transform.position, cameraDeadPosition.position, Time.deltaTime * cameraSpeed * 20);
+            transform.rotation = Quaternion.LookRotation((cameraDeadtarget.position - transform.position).normalized);
+            Debug.DrawRay(transform.position, (cameraDeadtarget.position - transform.position).normalized);
+        }
+        else transform.rotation = Quaternion.LookRotation((player.position - transform.position).normalized);
+ 
+
 
 
         if (Input.GetKey(KeyCode.R))
