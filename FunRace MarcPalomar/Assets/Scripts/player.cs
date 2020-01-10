@@ -11,6 +11,8 @@ public class player : MonoBehaviour
     public Transform cameraDeadtarget;
     public camera cam;
 
+    public AudioSource mamamia;
+
     //Modifiers
     public float playerSpeed = 1f;
     public float rotateSpeed = 1f;
@@ -57,6 +59,7 @@ public class player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GetComponent<Rigidbody>().Sleep();
         if (!dead)
         {
 
@@ -113,11 +116,10 @@ public class player : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("sads");
         if (collision.gameObject.tag == "death")
         {
             dead = true;
-
+            mamamia.Play();
         }
     }
 }
